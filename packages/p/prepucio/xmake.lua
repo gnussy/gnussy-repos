@@ -1,23 +1,32 @@
 package("prepucio")
+    set_kind("library", {headeronly = true})
     set_homepage("https://gnussy.org")
     set_description("PREPUC.io - a Portable REPL with Embedded Plugin Utility for C++")
 
     add_urls("https://github.com/gnussy/prepucio.git")
-    add_versions("v1.0.0", "d284baf6b204e8b4f4f49aafc34ba48fdad4a238")
+    add_versions("v1.0.0", "5de5e734b58897b842ae4143ff985f0c78cd061d")
 
-    add_deps("cmake", "fmt", "penis", "tabulate")
+    add_deps("fmt", "penis", "tabulate")
 
     on_install(function (package)
-      local configs = {}
-      table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-      table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-      import("package.tools.cmake").install(package, configs)
+        local configs = {}
+        io.writefile("xmake.lua", [[
+            set_languages("c++20")
+            add_rules("mode.debug", "mode.release")
 
-      -- Copy the header files
-      os.cp("include/**/*.hpp", package:installdir(path.join("include", "prepucio")))
-      os.cp("build/linux/x86_64/release/*", package:installdir(path.join("lib")))
+            local libs = { "fmt", "penis", "tabulate" }
+
+            add_includedirs("include")
+            add_requires(table.unpack(libs))
+
+            target("prepucio")
+              set_kind("headeronly")
+              add_headerfiles("include/(**/*.hpp)")
+              add_packages(table.unpack(libs))
+        ]])
+        import("package.tools.xmake").install(package, configs)
     end)
 
     on_test(function (package)
-      assert(true)
+      assert(package:has_cxxincludes("prepucio/repl.hpp"))
     end)

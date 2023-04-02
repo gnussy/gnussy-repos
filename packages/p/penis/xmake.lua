@@ -4,19 +4,31 @@ package("penis")
 
     add_urls("https://github.com/gnussy/penis.git")
     add_versions("v1.0.0", "b29cfb503971b0b30b4a7afe98877de792ae2a23")
-    add_versions("v1.1.0", "163cf3f0eab9df669440e0e5cfa526eff3dc12ac")
+    add_versions("v1.1.1", "0e01f703b54388d5e8294f18b5031d94d447e658")
 
     on_install(function (package)
       local configs = {}
-      table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-      table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-      import("package.tools.cmake").install(package, configs)
+      io.writefile("xmake.lua", [[
+          set_languages("c++20")
+          add_rules("mode.release")
 
-      -- Copy the header files
-      os.cp("include/**/*.hpp", package:installdir(path.join("include", "penis")))
-      os.cp("build/linux/x86_64/release/*", package:installdir(path.join("lib")))
+          add_includedirs("include")
+
+          target("penis")
+            set_kind("$(kind)")
+            add_files("src/**/*.cpp")
+            add_headerfiles("include/(**/*.hpp)")
+      ]])
+
+      if package:config("shared") then
+        configs.kind = "shared"
+      else
+        configs.kind = "static"
+      end
+
+      import("package.tools.xmake").install(package, configs)
     end)
 
     on_test(function (package)
-      assert(true)
+      assert(package:has_cxxincludes("penis/penis.hpp"))
     end)
