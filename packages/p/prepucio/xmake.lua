@@ -4,7 +4,7 @@ package("prepucio")
     set_description("PREPUC.io - a Portable REPL with Embedded Plugin Utility for C++")
 
     add_urls("https://github.com/gnussy/prepucio.git")
-    add_versions("v1.0.0", "7aa090c254ad25e8f11a421090db5e9bbe5252a7")
+    add_versions("v1.0.0", "adeab6bb99b226e4134d5e8d22d25875d5bce2ab")
 
     add_deps("fmt", "penis", "tabulate")
 
