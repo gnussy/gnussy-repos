@@ -4,7 +4,7 @@ package("prepucio")
     set_description("PREPUC.io - a Portable REPL with Embedded Plugin Utility for C++")
 
     add_urls("https://github.com/gnussy/prepucio.git")
-    add_versions("v1.0.0", "adeab6bb99b226e4134d5e8d22d25875d5bce2ab")
+    add_versions("v1.0.0", "3bf1cd9b3078360d2d99c4a8228e7b726d59cef8")
 
     add_deps("fmt", "penis", "tabulate")
 
@@ -20,7 +20,7 @@ package("prepucio")
             add_requires(table.unpack(libs))
 
             target("prepucio")
-              set_kind("static")
+              set_kind("headeronly")
               add_headerfiles("include/(**/*.hpp)")
               add_packages(table.unpack(libs))
         ]])
