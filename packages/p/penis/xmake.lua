@@ -5,6 +5,7 @@ package("penis")
     add_urls("https://github.com/gnussy/penis.git")
     add_versions("v1.0.0", "b29cfb503971b0b30b4a7afe98877de792ae2a23")
     add_versions("v1.1.1", "0e01f703b54388d5e8294f18b5031d94d447e658")
+    add_versions("v2.0.0", "59814a6b64bea16a0e7df2bb91e521adaf613824")
 
     on_install(function (package)
       local configs = {}
