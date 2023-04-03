@@ -5,7 +5,7 @@ package("prepucio")
 
     add_urls("https://github.com/gnussy/prepucio.git")
     add_versions("v1.0.0", "3bf1cd9b3078360d2d99c4a8228e7b726d59cef8")
-    add_versions("v1.1.0", "ee0a9fe81501382df4850557a7ae267d076d4eba")
+    add_versions("v1.1.0", "6ab341dd816b73673c974d423f13172621e7e3ae")
 
     add_deps("fmt", "penis", "tabulate")
 
