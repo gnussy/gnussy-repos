@@ -7,6 +7,7 @@ package("penis")
     add_versions("v1.1.1", "0e01f703b54388d5e8294f18b5031d94d447e658")
     add_versions("v2.0.0", "62ef47aa2f3bbeba05e15c0940a78824a5b06367")
     add_versions("v2.1.0", "16c5293e7aec0ac36182a51957cb8069d93595bb")
+    add_versions("v2.1.1", "a84e25d0c7f6fd6b471d490e4a874353bba7d758")
 
     on_install(function (package)
       local configs = {}
